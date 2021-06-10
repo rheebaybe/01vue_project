@@ -1,26 +1,77 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+<my-banner/>
+
+<div class="black-bg" v-if="proView == true">
+  <div class="white-bg">
+    <img v-bind:src="product[proNum].image">
+    <div>{{product[proNum].title}}</div>
+    <div>{{product[proNum].price}}</div>
+    <div>{{product[proNum].content}}</div>
+    <button v-on:click="proView=false">닫기</button>
+  </div>
+</div>
+<ul class="view">
+  <li v-for="(item,i) in product" :key="i">
+    <img v-bind:src="product[i].image">
+    <div>{{product[i].title}}
+      <div><span v-on:click="proView=true;proNum=i">[상세보기]</span></div>
+    </div>
+    <div>{{product[i].price}}</div>
+  </li>
+</ul>
 </template>
+// html소스 넣는곳
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import vdata from './data.js'
+import banner from './components/banner.vue'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  data(){
+    return{
+      proNum:0,
+      proView:true,
+      product: vdata,
+    }
+  },
+  components:{
+    'my-banner':banner,
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+html,body{
+  height: 100%;
+}
+*{
+  margin:0 auto;
+  padding:0;
+}
+li{
+  list-style: none;
+}
+img{
+  width: 100%;
+}
+.view li{
+  margin-bottom: 20px;
+}
+.black-bg{
+  position: fixed;
+  top:0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+}
+.white-bg{
+  width:80%;
+  background: #fff;
+  border-radius: 5px;
+  padding:20px;
 }
 </style>
