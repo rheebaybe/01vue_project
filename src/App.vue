@@ -1,7 +1,7 @@
 <template>
 <my-banner/>
 
-<div class="black-bg" v-if="proView == true">
+<!-- <div class="black-bg" v-if="proView == true">
   <div class="white-bg">
     <img v-bind:src="product[proNum].image">
     <div>{{product[proNum].title}}</div>
@@ -9,8 +9,13 @@
     <div>{{product[proNum].content}}</div>
     <button v-on:click="proView=false">닫기</button>
   </div>
-</div>
-<ul class="view">
+</div> -->
+<modal :product="product" :proView="proView" :proNum="proNum"
+@modalClose="proView=false" />
+<!-- v-bind:작명="아래데이터값" -->
+
+
+<!-- <ul class="view">
   <li v-for="(item,i) in product" :key="i">
     <img v-bind:src="product[i].image">
     <div>{{product[i].title}}
@@ -18,25 +23,36 @@
     </div>
     <div>{{product[i].price}}</div>
   </li>
-</ul>
+</ul> -->
+
+
+<product v-bind:product="product[i]" v-for="(item,i) in product" v-bind:key="i" 
+@modalOpen="proView=true;proNum=$event" />
+<!-- 0번자리가 5번 돌아갈수있게 fot-in문을 써준다
+$event는 'modalOpen'뒤에 product.id를 가져온것이다 -->
+
 </template>
 // html소스 넣는곳
 
 <script>
 import vdata from './data.js'
 import banner from './components/banner.vue'
+import modal from './components/modal.vue'
+import product from './components/product.vue'
 
 export default {
   name: 'App',
   data(){
     return{
       proNum:0,
-      proView:true,
+      proView:false,
       product: vdata,
     }
   },
   components:{
     'my-banner':banner,
+     modal:modal,
+     product:product,
   }
 }
 </script>
