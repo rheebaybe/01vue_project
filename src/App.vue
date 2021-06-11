@@ -47,6 +47,7 @@ export default {
       proNum:0,
       proView:false,
       product: vdata,
+      // 작명:import값
     }
   },
   components:{
